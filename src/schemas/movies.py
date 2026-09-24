@@ -29,7 +29,11 @@ class MovieCreate(BaseModel):
     budget: float = Field(ge=0)
     revenue: float = Field(ge=0)
 
-    country: str
+    country: str = Field(
+        min_length=2,
+        max_length=3,
+    )
+
     genres: list[str]
     actors: list[str]
     languages: list[str]
@@ -37,9 +41,7 @@ class MovieCreate(BaseModel):
     @field_validator("date")
     @classmethod
     def validate_date(cls, value: Date):
-        max_date = Date.today() + timedelta(days=365)
-
-        if value > max_date:
+        if value > Date.today() + timedelta(days=365):
             raise ValueError(
                 "Release date cannot be more than one year in the future."
             )
@@ -111,9 +113,7 @@ class MovieUpdate(BaseModel):
         if value is None:
             return value
 
-        max_date = Date.today() + timedelta(days=365)
-
-        if value > max_date:
+        if value > Date.today() + timedelta(days=365):
             raise ValueError(
                 "Release date cannot be more than one year in the future."
             )
