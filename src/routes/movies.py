@@ -3,9 +3,6 @@ from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-
-
-
 from database import get_db, MovieModel
 from database.models import CountryModel, GenreModel, ActorModel, LanguageModel
 from schemas.movies import MovieDetail, MovieUpdate, MovieCreate, MovieList
@@ -254,4 +251,3 @@ async def update_movie(
     await db.commit()
 
     return {"detail": "Movie updated successfully."}
-
